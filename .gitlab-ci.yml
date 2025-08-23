@@ -1,5 +1,15 @@
 stages:
+  - test
   - deploy
+test_job:
+  stage: test
+  tags:
+    - shell
+  script:
+    - echo "Hello from GitLab Runner!"
+    - pwd
+    - ls -la
+
 deploy:
   stage: deploy
   tags:
