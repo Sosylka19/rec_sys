@@ -10,5 +10,4 @@ deploy:
     - docker compose up -d --build
   rules:
     - changes:
-      -db_service/**/*
-  l
+      - db_service/**/*
