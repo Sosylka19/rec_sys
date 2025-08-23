@@ -17,8 +17,20 @@ deploy:db:
     - shell
   script:
     - cd db_service
-    - echo "Deplying app to remote server."
+    - echo "Deploying app to remote server."
     - docker compose up -d --build
   rules:
     - changes:
       - db_service/**/*
+
+deploy:ml:
+  stage: deploy
+  tags:
+    - shell
+  script:
+    - cd ml_service
+    - echo "Deploying app to remote server."
+    - docker compose up -d --build
+  rules:
+    - changes:
+      - ml_service/**/*
