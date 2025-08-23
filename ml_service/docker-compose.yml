@@ -13,5 +13,6 @@ services:
       - rec-sys-network
 networks:
   rec-sys-network:
+    external: true
     name: rec-sys-network
     driver: bridge
