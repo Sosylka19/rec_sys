@@ -48,3 +48,15 @@ deploy:krakend:
   rules:
     - changes:
       - krakend/**/*
+
+deploy:nginx:
+  stage: deploy
+  tags:
+    - shell
+  script:
+    - cd krakend
+    - echo "Deploying nginx_app to remote server."
+    - docker compose up -d --build
+  rules:
+    - changes:
+      - nginx/**/*
