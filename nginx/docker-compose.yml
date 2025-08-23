@@ -1,5 +1,5 @@
 services:
-  krakend:
+  nginx:
     container_name: nginx
     build: 
       context: .
