@@ -1,0 +1,17 @@
+services:
+  web:
+    container_name: db_service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    environment:
+      - ENV=dev
+    restart: always
+    networks:
+      - app-network
+  
+networks:
+  app-network:
+    external: true

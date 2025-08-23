@@ -1,0 +1,9 @@
+stages:
+  - deploy
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying app to remote server..."
+    - docker compose up -d --build
+
+    
