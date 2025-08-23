@@ -54,7 +54,7 @@ deploy:nginx:
   tags:
     - shell
   script:
-    - cd krakend
+    - cd nginx
     - echo "Deploying nginx_app to remote server."
     - docker compose up -d --build
   rules:
