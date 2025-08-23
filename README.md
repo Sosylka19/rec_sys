@@ -1,4 +1,6 @@
+
 ## architectire
+
 
 ```mermaid
     flowchart TD
@@ -25,7 +27,6 @@
     gantt
     title Roadmap проекта "movie_rec_bot"
     dateFormat  YYYY-DD
-
     axisFormat  %d
 
     section Подготовка
@@ -46,6 +47,7 @@
     section Завершение
     Тестирование                  :e1, after d2, 8h
     Деплой                        :e2, after d2, 8h
+
 ```
 
 ### request-response cycle
