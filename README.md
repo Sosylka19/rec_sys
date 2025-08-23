@@ -47,6 +47,8 @@
     section Завершение
     Тестирование                  :e1, after d2, 8h
     Деплой                        :e2, after d2, 8h
+    Тестирование                  :e1, after d2, 8h
+    Деплой                        :e2, after d2, 8h
 
 ```
 
