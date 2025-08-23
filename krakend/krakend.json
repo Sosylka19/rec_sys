@@ -5,7 +5,7 @@
     "cache_ttl": "300s",
     "endpoints": [
         {
-            "endpoint": "/db/health_check/",
+            "endpoint": "/db/health",
             "method": "GET",
             "backend": [
                 {
@@ -15,7 +15,7 @@
             ]
         },
         {
-            "endpoint": "/ml/health_check/",
+            "endpoint": "/ml/health",
             "method": "GET",
             "backend": [
                 {
