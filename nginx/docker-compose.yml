@@ -1,9 +1,11 @@
 services:
   krakend:
-    container_name: krakend
+    container_name: nginx
     build: 
       context: .
       dockerfile: Dockerfile
+    ports:
+      - "80:80"
     networks:
       - rec-sys-network
 networks:
