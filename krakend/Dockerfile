@@ -1,3 +1,3 @@
 FROM devopsfaith/krakend:latest
-COPY krakend.json ~/rec_sys/krakend/config/kragend.json
-CMD ["run", "-c", "~/rec_sys/krakend/config/kragend.json"]
+COPY krakend.json /etc/krakend/config/krakend.json
+CMD ["run", "-c", "/etc/krakend/config/krakend.json"]
