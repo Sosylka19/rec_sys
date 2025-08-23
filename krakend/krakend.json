@@ -10,7 +10,7 @@
             "backend": [
                 {
                     "url_pattern": "/health_check/",
-                    "host": [ "http://localhost:8001" ]
+                    "host": [ "http://db_service:8001" ]
                 }
             ]
         },
@@ -20,7 +20,7 @@
             "backend": [
                 {
                     "url_pattern": "/health_check/",
-                    "host": [ "http://localhost:8000" ]
+                    "host": [ "http://ml_service:8000" ]
                 }
             ]   
         }
