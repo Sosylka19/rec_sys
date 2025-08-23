@@ -10,8 +10,8 @@ services:
       - ENV=production
     restart: always
     networks:
-      - app-network
-  
+      - rec-sys-network
 networks:
-  app-network:
+  rec-sys-network:
+    name: rec-sys-network
     driver: bridge
