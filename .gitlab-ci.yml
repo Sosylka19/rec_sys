@@ -1,5 +1,15 @@
 stages:
+  - test
   - deploy
+
+test:runner:
+  stage: test
+  tags:
+    - shell
+  script:
+    - echo "Runner is working!"
+    - pwd
+    - ls -la
 
 deploy:db:
   stage: deploy
