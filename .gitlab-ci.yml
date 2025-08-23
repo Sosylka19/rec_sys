@@ -1,20 +1,14 @@
 stages:
-  - test
   - deploy
-test_job:
-  stage: test
-  tags:
-    - shell
-  script:
-    - echo "Hello from GitLab Runner!"
-    - pwd
-    - ls -la
 
 deploy:
   stage: deploy
   tags:
     - shell
   script:
-    - echo "Deploying app to remote server."
+    - cd db_service
     - docker compose up -d --build
-
+  rules:
+    - changes:
+      -db_service/**/*
+  l
