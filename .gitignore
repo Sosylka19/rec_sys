@@ -2,3 +2,4 @@
 */venv
 db_service/.env
 .DS_Store
+/builds
