@@ -7,9 +7,15 @@ variables:
   DOCKER_HOST: tcp://docker:2375
   DOCKER_TLS_CERTDIR: ""
 
-  
+
 stages:
   - deploy
+
+
+before_script:
+  - apk update && apk add --no-cache docker-compose
+  - docker --version
+  - docker-compose --version
 
 deploy:db:
   stage: deploy
@@ -19,7 +25,7 @@ deploy:db:
     - cd db_service
     - echo "Deploying db_app to remote server."
     - pwd
-    - docker compose up -d --build
+    - docker-compose up -d --build
   rules:
     - changes:
       - db_service/**/*
@@ -32,7 +38,7 @@ deploy:ml:
     - cd ml_service
     - echo "Deploying ml_app to remote server."
     - pwd
-    - docker compose up -d --build
+    - docker-compose up -d --build
   rules:
     - changes:
       - ml_service/**/*
@@ -47,7 +53,7 @@ deploy:krakend:
     - cd krakend
     - echo "Deploying krakenb_app to remote server."
     - pwd
-    - docker compose up -d --build
+    - docker-compose up -d --build
   rules:
     - changes:
       - krakend/**/*
@@ -60,7 +66,7 @@ deploy:nginx:
     - cd nginx
     - echo "Deploying nginx_app to remote server."
     - pwd
-    - docker compose up -d --build
+    - docker-compose up -d --build
   rules:
     - changes:
       - nginx/**/*
