@@ -4,8 +4,9 @@ class History(SQLModel, table=True):
     """
     Register history & logs of client's queries
     """
-    session_id: str = Field(default=None)
-    timestamp: str = Field(default=None)
-    question: str = Field(default=None)
-    answer: str = Field(default=None)
+    id: int | None = Field(default=None, primary_key=True)
+    session_id: str
+    timestamp: str
+    question: str
+    answer: str
 

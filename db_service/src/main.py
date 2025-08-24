@@ -31,7 +31,7 @@ app.add_middleware(
 
 
 @app.post("/history/")
-async def add_history(history: CreateHistory, session: Session=Depends(get_session)):
+async def add_history(history: CreateHistory, session: Session = Depends(get_session)):
 
     logger.info("DB've got request")
 
@@ -49,10 +49,10 @@ async def add_history(history: CreateHistory, session: Session=Depends(get_sessi
     return {"status": "Db service started"}
 
 @app.get("/history/")
-async def get_history(session_id: str, session=Depends(get_session)):
+async def get_history(history: CreateHistory, session: Session = Depends(get_session)):
     logger.info("DB've sent request")
 
-    statement = select(History).where(History.session_id == session_id)
+    statement = select(History).where(History.session_id == history.session_id)
     results = session.exec(statement).all()
 
     if not results:
@@ -62,7 +62,7 @@ async def get_history(session_id: str, session=Depends(get_session)):
     question_answer = [[record.question, record.answer] for record in results]
 
     return GetHistory(
-        session_id=session_id,
+        session_id=history.session_id,
         timestamp=timestamps,
         question_answer=question_answer
     )
