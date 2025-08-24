@@ -5,21 +5,31 @@
     "cache_ttl": "300s",
     "endpoints": [
         {
-            "endpoint": "/db/health",
+            "endpoint": "/db",
             "method": "GET",
             "backend": [
                 {
-                    "url_pattern": "/health_check/",
+                    "url_pattern": "/history/",
                     "host": [ "http://db_service:8001" ]
                 }
             ]
         },
         {
-            "endpoint": "/ml/health",
+            "endpoint": "/db",
+            "method": "POST",
+            "backend": [
+                {
+                    "url_pattern": "/history/",
+                    "host": [ "http://db_service:8001" ]
+                }
+            ]
+        },
+        {
+            "endpoint": "/ml",
             "method": "GET",
             "backend": [
                 {
-                    "url_pattern": "/health_check/",
+                    "url_pattern": "/recommend/",
                     "host": [ "http://ml_service:8000" ]
                 }
             ]   

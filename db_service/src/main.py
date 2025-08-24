@@ -1,11 +1,12 @@
 from fastapi import FastAPI, HTTPException, Depends
 from contextlib import asynccontextmanager
-from sqlmodel import SQLModel, select
+from sqlmodel import Session, select
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 
-from app.db import init_db, get_session
-from app.models import Logs
+from db import init_db, get_session
+from models import History
+from schemas import CreateHistory, GetHistory
 
 
 logging.basicConfig(level=logging.INFO)
@@ -30,6 +31,38 @@ app.add_middleware(
 
 
 @app.post("/history/")
-async def add_history():
+async def add_history(history: CreateHistory, session: Session=Depends(get_session)):
+
     logger.info("DB've got request")
+
+    new_record = History(
+        session_id=history.session_id,
+        timestamp=history.timestamp,
+        question=history.question,
+        answer=history.answer
+    )
+
+    session.add(new_record)
+    session.commit()
+    session.refresh(new_record)
+
     return {"status": "Db service started"}
+
+@app.get("/history/")
+async def get_history(session_id: str, session=Depends(get_session)):
+    logger.info("DB've sent request")
+
+    statement = select(History).where(History.session_id == session_id)
+    results = session.exec(statement).all()
+
+    if not results:
+        raise HTTPException(status_code=404, detail="Session ID not found")
+
+    timestamps = [record.timestamp for record in results]
+    question_answer = [[record.question, record.answer] for record in results]
+
+    return GetHistory(
+        session_id=session_id,
+        timestamp=timestamps,
+        question_answer=question_answer
+    )

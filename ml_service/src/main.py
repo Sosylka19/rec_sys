@@ -7,8 +7,10 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 app = FastAPI()
 
-@app.get("/health_check/")
+@app.get("/recommend/")
 async def health_check():
-    logger.info("получен запрос мл")
-    print("smth ml")
+    """
+    Form a response to a film recommendation request.
+    """
+    logger.info("ML've recieved a request")
     return {"status": "ml-service service started"}
