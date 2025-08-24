@@ -13,7 +13,7 @@ stages:
 
 
 before_script:
-  - apk update && apk add --no-cache docker-compose
+  - export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
   - docker --version
   - docker-compose --version
 
