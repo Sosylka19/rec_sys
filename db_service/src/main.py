@@ -2,15 +2,11 @@ from fastapi import FastAPI, HTTPException, Depends
 from contextlib import asynccontextmanager
 from sqlmodel import Session, select
 from fastapi.middleware.cors import CORSMiddleware
-import logging
 
 from db import init_db, get_session
 from models import History
 from schemas import CreateHistory, GetHistory
 
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -33,8 +29,6 @@ app.add_middleware(
 @app.post("/history/")
 async def add_history(history: CreateHistory, session: Session = Depends(get_session)):
 
-    logger.info("DB've got request")
-
     new_record = History(
         session_id=history.session_id,
         timestamp=history.timestamp,
@@ -50,7 +44,6 @@ async def add_history(history: CreateHistory, session: Session = Depends(get_ses
 
 @app.get("/history/")
 async def get_history(history: CreateHistory, session: Session = Depends(get_session)):
-    logger.info("DB've sent request")
 
     statement = select(History).where(History.session_id == history.session_id)
     results = session.exec(statement).all()
