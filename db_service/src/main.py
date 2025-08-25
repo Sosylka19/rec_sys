@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends, status
+from fastapi import FastAPI, HTTPException, Depends, status, Body
 from contextlib import asynccontextmanager
 from sqlmodel import Session, select
 from fastapi.middleware.cors import CORSMiddleware
@@ -53,8 +53,10 @@ async def add_history(history: CreateHistory, session: Session = Depends(get_ses
         )
 
 @app.get("/history/")
-async def get_history(history: CreateHistory, session: Session = Depends(get_session)):
-
+async def get_history(
+    history: GetHistory, session: Session = Depends(get_session)
+    ):
+    
     statement = select(History).where(History.session_id == history.session_id)
     results = session.exec(statement).all()
 
@@ -63,6 +65,4 @@ async def get_history(history: CreateHistory, session: Session = Depends(get_ses
 
     recommendation = [[record.film, record.recommendation] for record in results]
 
-    return GetHistory(
-        recommendation=recommendation
-    )
+    return {"recommendation": recommendation}

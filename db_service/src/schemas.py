@@ -8,4 +8,4 @@ class CreateHistory(BaseModel):
 
 
 class GetHistory(BaseModel):
-    recommendation: List[List[str]]  # List of [question, answer] pairs
+    session_id: str
