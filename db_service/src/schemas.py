@@ -1,14 +1,11 @@
 from pydantic import BaseModel
-from typing import List, Union
+from typing import List
 
 class CreateHistory(BaseModel):
     session_id: str
-    timestamp: str
-    question: str
-    answer: str
+    film: str
+    recommendation: str
 
 
 class GetHistory(BaseModel):
-    session_id: str
-    timestamp: List[str]
-    question_answer: List[List[str]]  # List of [question, answer] pairs
+    recommendation: List[List[str]]  # List of [question, answer] pairs
