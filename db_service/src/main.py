@@ -52,7 +52,7 @@ async def add_history(history: CreateHistory, session: Session = Depends(get_ses
             detail=f"Database error: {str(err)}"
         )
 
-@app.get("/history/")
+@app.post("/history/")
 async def get_history(
     history: GetHistory, session: Session = Depends(get_session)
     ):

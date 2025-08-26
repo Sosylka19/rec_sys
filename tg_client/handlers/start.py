@@ -6,7 +6,7 @@ from aiogram.fsm.context import FSMContext
 import requests
 
 from keyboard.buttons import builder
-from ml_request import generate_films, regenerate_films
+from handlers.ml_request import generate_films, regenerate_films
 
 start_router = Router()
 
@@ -41,7 +41,7 @@ async def process_film(message: Message, state: FSMContext):
     await state.update_data(last_film=film, session_id=session_id)
     await state.set_state(None)
 
-    text = generate_films(session_id=str(session_id), film=film, recommendation=[])
+    text = generate_films(session_id=str(session_id), film=film, recommendation=[""])
 
     await message.answer(
             text

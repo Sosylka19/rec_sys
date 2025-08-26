@@ -4,13 +4,10 @@ from typing import List, Union
 
 url = "http://localhost/recommender/"
 
-def call_ml_service(film: str, recommendation: Union[List[str], None]) -> dict:
+def call_ml_service(film: str, recommendation: List[str]) -> dict:
 
-    if not recommendation:
-        recommendation = []
-        
     try:
-        r = requests.get(url=url + "ml", data={"film": film, "recommedatoion": recommendation})
+        r = requests.post(url=f"{url}ml", json={"film": film, "recommendation": recommendation})
 
         if r.status_code == 200:
             return {"status": "ok",
@@ -25,7 +22,7 @@ def call_ml_service(film: str, recommendation: Union[List[str], None]) -> dict:
             try:
                 error_data = r.json()
                 return {"status": "no",
-                            "text": f"Validation Error: {error_data}"}
+                            "text": f"Validation Error: {str(error_data)[:40]}"}
             except ValueError:
                 return {"status": "no",
                         "text": "Validation Error: Unable to parse error details" }
@@ -34,7 +31,8 @@ def call_ml_service(film: str, recommendation: Union[List[str], None]) -> dict:
 
     except requests.exceptions.RequestException as err:
         return {"status": "no",
-            "text": f"Sorry, failed, err: {err.args[0]}"}
+            "text": f"Sorry, failed, err: {str(err)[:30]}"}
+ 
     
     return {"status": "no",
             "text": "sorry, unhandling error"}
@@ -54,7 +52,7 @@ def generate_films(session_id: str, film: str, recommendation: List[str]) -> str
 
 
         try:
-            r = requests.post(url=url + "db", json=data_post)
+            r = requests.post(url=f"{url}db", json=data_post)
 
             if r.status_code == 200:
                 text = f"Your recommendation: {film_recommendations}"
@@ -72,9 +70,9 @@ def generate_films(session_id: str, film: str, recommendation: List[str]) -> str
                 r.raise_for_status()
 
         except requests.exceptions.RequestException as err:
-            text = f"Sorry, failed, err: {err.args[0]}"
+            text = f"Sorry, failed, err: {str(err)[:30]}"
     else:
-        text = "Sorry, unhandling error"
+        text = answer["text"]
 
     return text
 
@@ -84,7 +82,7 @@ def regenerate_films(session_id: str, film: str) -> str:
         "session_id": session_id
     }
     try:
-        r = requests.get(url=url + "db", data=data_regenerate)
+        r = requests.get(url=f"{url}db", data=data_regenerate)
 
         if r.status_code == 200:
             #fix it

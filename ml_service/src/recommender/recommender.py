@@ -5,4 +5,4 @@ class Recommender():
 
     def recommend(self, recommendation: List[str]) -> str:
         #Magic with model
-        return ""
+        return "Bla1 Bla2"
