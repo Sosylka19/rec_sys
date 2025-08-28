@@ -1,10 +1,19 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
+from typing import Union, List
+
+from recommender.recommender import Recommender
 
 app = FastAPI()
 
-@app.get("/recommend/")
-async def health_check():
+@app.post("/recommend/")
+async def health_check(film: str = Body(...), recommendation: List[str] = Body(...)):
     """
     Form a response to a film recommendation request.
     """
-    return {"status": "ml-service service started"}
+
+    answer = Recommender(film).recommend(recommendation=recommendation)
+
+    return {
+        "status code": "ok",
+        "recommendation": answer
+    }

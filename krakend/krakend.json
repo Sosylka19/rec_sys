@@ -26,7 +26,7 @@
         },
         {
             "endpoint": "/ml",
-            "method": "GET",
+            "method": "POST",
             "backend": [
                 {
                     "url_pattern": "/recommend/",
