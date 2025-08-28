@@ -1,5 +1,6 @@
 import requests
-from typing import List, Union
+from typing import List
+from handlers.form import get_movie_info
 
 
 url = "http://localhost/recommender/"
@@ -37,25 +38,24 @@ def call_ml_service(film: str, recommendation: List[str]) -> dict:
     return {"status": "no",
             "text": "sorry, unhandling error"}
 
-def generate_films(session_id: str, film: str, recommendation: List[str]) -> str:
-
+def generate_films(session_id: str, film: str, recommendation: List[str]) -> dict:
     answer = call_ml_service(film, recommendation=recommendation)
+    description = {}
 
     if answer["status"] == "ok":
         film_recommendations = answer["text"]
-    
         data_post = {
         "session_id": f"{session_id}",
         "film": f"{film}",
         "recommendation": f"{film_recommendations}"
         }  
 
-
         try:
             r = requests.post(url=f"{url}db", json=data_post)
 
             if r.status_code == 200:
-                text = f"Your recommendation: {film_recommendations}"
+                text = f"Success"
+                description = [get_movie_info(f) for f in film_recommendations.split(', ')] #5 dicts with info
             elif r.status_code == 404:
                 text = "Sorry, session ID not found"
             elif r.status_code == 500:
@@ -74,22 +74,25 @@ def generate_films(session_id: str, film: str, recommendation: List[str]) -> str
     else:
         text = answer["text"]
 
-    return text
+    return {
+        "text": text, 
+        "info": description
+    }    
 
 
-def regenerate_films(session_id: str, film: str) -> str:
+def regenerate_films(session_id: str, film: str) -> dict:
     data_regenerate = {
         "session_id": session_id
     }
+    description = {}
     try:
-        r = requests.get(url=f"{url}db", data=data_regenerate)
+        r = requests.get(url=f"{url}db", json=data_regenerate)
 
         if r.status_code == 200:
-            #fix it
-            recommended_films = [i[1].split(' ') for i in (r.json())["recommendation"] if i[0] == film]
-
+            recommended_films = [i for i in (r.json())["recommendation"]]
             text = generate_films(session_id=session_id, film=film, recommendation=recommended_films)
-            
+            description = text["info"]
+            text = text["text"]
         elif r.status_code == 404:
             text = "Sorry, session ID not found"
         elif r.status_code == 500:
@@ -99,11 +102,14 @@ def regenerate_films(session_id: str, film: str) -> str:
                 error_data = r.json()
                 text = f"Validation Error: {error_data}"
             except ValueError:
-                text = "Validation Error: Unable to parse error details" 
+                text = "Validation Error: Unable to parse details" 
         else:
             r.raise_for_status()
 
     except requests.exceptions.RequestException as err:
         text = f"Sorry, failed, err: {err.args[0]}"
 
-    return text
+    return {
+    "text": text,
+    "info": description
+    }
