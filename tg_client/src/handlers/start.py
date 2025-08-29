@@ -5,7 +5,6 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 from aiogram.utils.media_group import MediaGroupBuilder
 from aiogram.methods.send_media_group import SendMediaGroup
-import requests
 
 from keyboard.buttons import builder
 from handlers.ml_request import generate_films, regenerate_films

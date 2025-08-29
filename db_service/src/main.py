@@ -58,7 +58,6 @@ async def get_history(
     ):
     
     statement = select(History).where(History.session_id == history.session_id)
-    #check if it works
     results = session.exec(statement).all()
 
     if not results:

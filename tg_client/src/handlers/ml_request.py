@@ -1,9 +1,8 @@
 import requests
 from typing import List
-from handlers.form import get_movie_info
+from form import get_movie_info
 
-
-url = "http://localhost/recommender/"
+url = "http://nginx/recommender/"
 
 def call_ml_service(film: str, recommendation: List[str]) -> dict:
 

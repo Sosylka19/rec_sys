@@ -1,9 +1,12 @@
 import requests
 from functools import lru_cache
+import os
+from dotenv import load_dotenv
 
-# API ключи (замените на свои)
-KINOPOISK_API_KEY = 'de8e6f7e-b3cd-47c8-a92c-17f1677f1145'  
-OMDB_API_KEY = '2ff04803'           
+
+load_dotenv()
+KINOPOISK_API_KEY = os.getenv('KINOPOISK_API_KEY')
+OMDB_API_KEY = os.getenv('OMDB_API_KEY')      
 
 @lru_cache(maxsize=100)
 def get_movie_info(title: str):
@@ -78,7 +81,6 @@ def get_omdb_info(title: str):
             data = response.json()
             if data.get('Response') == 'True':
                 
-                # Конвертируем рейтинг в число
                 rating = 0
                 if data.get('imdbRating') and data['imdbRating'] != 'N/A':
                     try:

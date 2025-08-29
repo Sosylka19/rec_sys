@@ -5,3 +5,4 @@
 ml_service/src/eda+baseline/data
 *__pycache__
 *preproccessed_data.pkl
+*.env
