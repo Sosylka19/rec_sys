@@ -52,18 +52,17 @@ async def add_history(history: CreateHistory, session: Session = Depends(get_ses
             detail=f"Database error: {str(err)}"
         )
 
-@app.post("/history/")
+@app.get("/history/")
 async def get_history(
     history: GetHistory, session: Session = Depends(get_session)
     ):
     
     statement = select(History).where(History.session_id == history.session_id)
-    #check if it works
     results = session.exec(statement).all()
 
     if not results:
         raise HTTPException(status_code=404, detail="Session ID not found")
 
-    recommendation = [[record.film, record.recommendation] for record in results]
+    recommendation = [record.recommendation for record in results]
 
     return {"recommendation": recommendation}

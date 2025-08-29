@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import pickle
 
 
 def func(arr: str) -> np.ndarray:
@@ -23,11 +24,10 @@ def recommend_movies(title: str, top_n=5):
     similar_indices = similarities.argsort()[-(top_n+1):-1][::-1]
     return list(data_titles['original_title'][similar_indices])
 
-data_vectors = pd.read_csv('./eda+baseline/data/vectors.csv')
 data_titles = pd.read_csv('./eda+baseline/data/titles.csv')
 
+with open('preproccessed_data.pkl', 'rb') as file:
+      vectors = pickle.load(file)
 
-data_vectors['vectors'] = data_vectors['vectors'].map(lambda x: func(x))
 
-data_vectors['vectors'][0]
-vectors = np.stack(list(data_vectors['vectors'].values))
+
