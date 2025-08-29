@@ -14,7 +14,6 @@ deploy:db:
   script:
     - cd db_service
     - echo "Deploying db_app to remote server."
-    - pwd
     - docker-compose up -d --build
   rules:
     - changes:
@@ -27,7 +26,6 @@ deploy:ml:
   script:
     - cd ml_service
     - echo "Deploying ml_app to remote server."
-    - pwd
     - docker-compose up -d --build
   rules:
     - changes:
@@ -42,7 +40,6 @@ deploy:krakend:
   script:
     - cd krakend
     - echo "Deploying krakenb_app to remote server."
-    - pwd
     - docker-compose up -d --build
   rules:
     - changes:
@@ -55,8 +52,19 @@ deploy:nginx:
   script:
     - cd nginx
     - echo "Deploying nginx_app to remote server."
-    - pwd
     - docker-compose up -d --build
   rules:
     - changes:
       - nginx/**/*
+
+deploy:tg-client:
+  stage: deploy
+  tags: 
+    - shell
+  script:
+    - cd tg_client
+    - echo "Deploying tg)client to remote server"
+    - docker-compsoe up -d --build
+  rules:
+    - changes:
+      - tg_client/**/*

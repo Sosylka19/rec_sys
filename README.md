@@ -9,16 +9,17 @@
         end
 
         subgraph Backend
-            API[userver Backend]
+            API[Nginx]
             RS[Recommender System ML Core]
-            DB[(PostgreSQL Database)]
+            DB[PostgreSQL Database]
         end
 
-        TG -->|User's queries| API
-        API -->|Deriving data of films, hostory| DB
+        TG -->|TG-BOT's queries| API
+        API -->|Sending data of films, history| DB
         API -->|Model query| RS
         RS -->|Rec films| API
         API -->|Backend's answer| TG
+        DB --> |Request status| API
 ```
 
 ## roadmap
@@ -34,34 +35,27 @@
     Проектирование архитектуры          :done,  des2, after des1, 1h
 
     section Бекенд и бд
-    Настройка PostgreSQL сервиса                :active, b1, after des2, 4h
-    Реализация Backend(KrakenD, Nginx, ,FastAPI)          :b2, after b1, 12h
+    Настройка PostgreSQL сервиса                :done, b1, after des2, 4h
+    Реализация Backend(KrakenD, Nginx,FastAPI)          :done, b2, after b1, 12h
 
     section ML часть
-    Интеграция модели в API       :c1, after b2, 10h
+    Создание M(ядро)-сервиса       :done, c1, after b2, 10h
 
     section Telegram Bot
-    Создание бота и UI            :d1, after c1, 14h
-    Интеграция с API              :d2, after d1, 1d
+    Создание бота и UI            :done, d1, after c1, 14h
+    Интеграция с API              :done, d2, after d1, 1d
 
     section Завершение
-    Тестирование                  :e1, after d2, 8h
-    Деплой                        :e2, after d2, 8h
-    Тестирование                  :e1, after d2, 8h
-    Деплой                        :e2, after d2, 8h
+    Тестирование                  :done, e1, after d2, 8h
+    Деплой                        :done, e2, after d2, 8h
 
 ```
-
-### request-response cycle
-
-1. user authorizing: tg-bot(client) send request on API Gateway;
-2. server process the query and send query to the DB for auth/reg;
-3. user input film: tg -> krakend -> ml_core -> server -> tg
-4. user getting 5 similar films with photo, description, aability to resend requery and watch trailer;
 
 ### instruments
 
 - tg libs: aiogram
-- backend: FastAPI, Nginx, KrakenD, RabbitMQ
+- backend: FastAPI, Nginx, KrakenD
+- container: Docker
+- CI/CD: GitLab CI
 - db: PostgreSQL
 - ml: model(sentence-transformer)
