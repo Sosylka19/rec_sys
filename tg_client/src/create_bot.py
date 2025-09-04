@@ -6,15 +6,11 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from dotenv import load_dotenv
 import os
 
-# from db_handler.db_class import PostgresHandler
-
-# pg_db = PostgresHandler(config('PG_LINK'))
 load_dotenv()
 
 token = os.getenv('TOKEN')
 if not token:
     raise ValueError("TOKEN environment variable is not set.")
-# scheduler = AsyncIOScheduler(timezone='Europe/Moscow')
 
 logging.basicConfig(
     level=logging.INFO,
