@@ -1,5 +1,7 @@
 # Movie recommender
 
+![Photo](https://github.com/Sosylka19/rec_sys/blob/dev/Screenshot%202025-09-04%20at%2018.26.15.png)
+
 Телеграм-бот для интеллектуальной рекомендации фильмов на основе введенного фильма. Реализована микросервисная архиктура с Krakend API-Gateway, Nginx и ml kernel(content-based sentence-transformer).
 
 ---
