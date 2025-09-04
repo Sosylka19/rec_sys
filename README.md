@@ -1,6 +1,12 @@
+# Movie recommender
 
-## architectire
+![Photo](https://github.com/Sosylka19/rec_sys/blob/dev/Screenshot%202025-09-04%20at%2018.26.15.png)
 
+Телеграм-бот для интеллектуальной рекомендации фильмов на основе введенного фильма. Реализована микросервисная архиктура с Krakend API-Gateway, Nginx и ml kernel(content-based sentence-transformer).
+
+---
+
+## Архитектура
 
 ```mermaid
     flowchart TD
@@ -21,8 +27,9 @@
         API -->|Backend's answer| TG
         DB --> |Request status| API
 ```
+---
 
-## roadmap
+## Дорожная карта
 
 ```mermaid
     gantt
@@ -50,12 +57,52 @@
     Деплой                        :done, e2, after d2, 8h
 
 ```
+---
 
-### instruments
+## Технологический стек
 
-- tg libs: aiogram
-- backend: FastAPI, Nginx, KrakenD
-- container: Docker
-- CI/CD: GitLab CI
-- db: PostgreSQL
-- ml: model(sentence-transformer)
+### Микросервисная архиктерктура(FastAPI)
+
+#### Database сервис
+-  PostgreSQL(история запросов для каждой сессии)
+-  SQLModel(для коннекта с постгресом и инициализации моделей данных)
+  
+#### Ml-ядро сервис
+- Sentence-transformer
+- Nltk
+
+#### KrakenD сервиса
+- KrakenD(API-Gateway) 
+
+#### Nginx сервис
+- Nginx(load balancer & reverse proxy)) 
+
+#### Telegram Bot service
+- Aiogram
+
+#### Инфраструктура
+- Docker, Docker Compose(в каждом сервисе для независимой масштабирования оркестрации сервиса)
+- GitLab CI(непрерывная интеграция в гитлаб(только деплой))
+
+
+## Старт
+1. Клонируем репу:
+   >git clone https://github.com/Sosylka19/rec_sys.git`
+
+2. Переходим в папку проекта
+   >cd rec_sys
+
+3. Для удобного поднятия всех сервисов написан Makefile, __перед этим установите и запустите Docker__:
+    >make start
+
+#### Описание команд Makefile:
+
+-- __make start__ - запускает все контейнеры
+
+-- __make <название сервиса>__ - собирает отдельный сервис с флагом --build
+
+-- __make down_all__ - удаляет все  контейнеры
+
+-- __make down___**<название сервиса>** - удаляет определенный контейнер
+
+
