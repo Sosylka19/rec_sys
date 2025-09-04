@@ -1,6 +1,6 @@
 # Movie recommender
 
-Телеграм-бот для интеллектуальной рекомендации фильмов на основе ввденного фильма. Реализована микросервисная архиктура с Krakend API-Gateway, Nginx и ml kernel(content-based sentence-transformer).
+Телеграм-бот для интеллектуальной рекомендации фильмов на основе введенного фильма. Реализована микросервисная архиктура с Krakend API-Gateway, Nginx и ml kernel(content-based sentence-transformer).
 
 ---
 
@@ -86,11 +86,11 @@
 ## Старт
 1. Клонируем репу:
    >git clone https://github.com/Sosylka19/rec_sys.git`
-   
+
 2. Переходим в папку проекта
    >cd rec_sys
 
-3. Для удобного поднятия всех сервисов написан Makefile:
+3. Для удобного поднятия всех сервисов написан Makefile, __перед этим установите и запустите Docker__:
     >make start
 
 #### Описание команд Makefile:
